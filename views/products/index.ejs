@@ -1,0 +1,47 @@
+<%- include("../partials/header") %>
+
+<title>DomXpress</title>
+</head>
+<body>
+<%- include("../partials/navbar") %> 
+<div class="container-fluid my-2">
+  <%- include("../partials/flash") %>
+</div> 
+<%- include("../partials/button") %> 
+<main>
+  <%- include('header'); %>
+    <div class="home-body container mt-4">      
+        <h2 class="text-center"> ¡DomotiqueXperience!</h2>
+        <h6 class="text-center">Sé parte del futuro</h6>
+        <hr>
+        <!-- <div style="margin-top: 1rem;" class="container">
+          <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item active" aria-current="page">Inicio <i class="fas fa-shopping-cart"></i></li>
+            </ol>
+          </nav>
+        </div> -->
+
+        <%- include("../partials/carrusel") %> 
+        <!-- <%- include("../partials/grid") %>  -->
+
+        <!-- <div class="container text-center" style="margin-top: 2rem;">
+          Da un vistazo a lo que ofrecemos
+          <div class="row">
+            
+              <form class="d-flex" role="search" action="" method="get">
+                <select class="form-select" aria-label="Default select example" name="buscar" required id=" validationCustom04 categoria">
+                  <option selected disabled value="">Buscar Categoría</option> -->
+                  <!-- <% for(item of cat){ %> 
+                    <option value="<%=item.categorias%>"><%=item.categorias%></option>
+                  <% } %> -->
+                <!-- </select>
+            <button class="btn btn-success" type="submit" value="Buscar">Buscar</button>
+          </form>
+          
+          </div>
+        </div> -->
+</main>
+<div style="margin-top: 1rem;">
+<%- include("../partials/footer") %>
+</div>

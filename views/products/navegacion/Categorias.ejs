@@ -1,0 +1,62 @@
+<%- include("../../partials/header") %>
+<title>Categorías</title> 
+</head>
+<body>
+<%- include("../../partials/navbar") %> 
+<%- include("../../partials/flash") %> 
+<%- include("../../partials/button") %> 
+<main>
+    <div class="home-body container mt-4">      
+        <div class="container">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Categorias</li>
+            </ol>
+          </nav>
+        </div>
+        <section>
+          <form class="search-bar" role="search" action="/buscarCategoria" method="get">
+                <select class="form-select" aria-label="Default select example" name="buscar" required id="validationCustom04 categoria">
+                  <option selected disabled value="">Selecciona una categoria...</option>
+                  <% for(item of cat){ %> 
+                    <option value="<%=item.categorias%>"><%=item.categorias%></option>
+                  <% } %>
+                </select>
+            <button class="btn btn-success" type="submit" value="Buscar">Buscar</button>
+            <a href="/categorias" class="btn btn-secondary">Restablecer</a>
+          </form>
+          
+          <% if(data.length<1){ %> 
+            <h3 class="text-center my-3">Lo sentimos! <br> No hay productos disponibles</h3>
+          <%} %>
+        </section>
+        <section class="product-holder">
+          <% if(data.length>=1){ %>
+            <div class="card-row">
+                <% for(let index=data.length-1;index>=0;index--){ let item=data[index]; %>
+                    <div class="product-card card">
+                        <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                          <% if(item.image !=undefined && item.image.data!=undefined){ %>
+                          <img src="data:image/<%=item.image.contentType%>;base64,<%=item.image.data.toString('base64')%>" class="img-fluid" />
+                        <%} else { %>
+                        <img src="<%=item.img%>" class="img-fluid" alt="Item Image" />
+                       <% } %>
+                          <a href="#!">
+                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                          </a>
+                        </div>
+                        <div class="card-body">
+                          <h5 class="card-title"><%= item.name%></h5>
+                          <h6 class="card-subtitle mb-2 text-muted">Precio &#36;<%=item.price%></h6>
+                          <p class="card-text"><%=item.desc.slice(0,90)%>...</p>
+                          <a href="/products/<%=item._id%>" class="btn btn-primary">Ver más</a>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+          <% } %>
+        </section>
+    </div>
+</main>
+<%- include("../../partials/footer") %>

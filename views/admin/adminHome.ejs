@@ -1,0 +1,55 @@
+<%- include("../partials/header") %>
+
+<title>Administrador Inicio</title>
+</head>
+<body>
+<%- include("../partials/navbar") %> 
+<%- include("../partials/header") %>
+<div class="container-fluid my-2">
+  <%- include("../partials/flash") %>
+</div> 
+<main>
+    <div class="container my-3">
+        <h2 class="text-center my-2">Administrador</h2>
+        <hr>
+        <div class=" row p-4">
+                
+                <div class=" actions card text-center col-md my-2 p-5">
+                    <div class=" action-item card-body p-3">
+                      <h5 class="card-title"><a href="/admin/products">Productos <i class="fas fa-book"></i></a> </h5>
+                      
+                    </div> 
+                  </div>
+            
+                <div class="actions  card text-center col-md my-2 p-5">
+                    <div class=" action-item card-body">
+                      <h5 class="card-title"><a href="/admin/user">Usuarios <i class='fa fa-address-card'></i></a></h5>
+
+                    </div> 
+                  </div>
+            
+                <div class=" actions card text-center col-md my-2 p-5">
+                    <div class=" action-item card-body">
+                      <h5 class="card-title"><a href="/admin/orders">Pedidos/Citas <i class='fa fa-id-badge'></i></a></h5>
+                      
+                    </div> 
+
+                    <!-- <div class=" actions card text-center col-md my-2 p-5">
+                      <div class=" action-item card-body">
+                        <h5 class="card-title"><a href="/admin/orders">Servicios <i class='fa fa-id-badge'></i></a></h5>
+                        
+                      </div> 
+                  </div> -->
+<!-- 
+                  <div class=" actions card text-center col-md my-2 p-5">
+                    <div class=" action-item card-body">
+                      <h5 class="card-title"><a href="/admin/categorias">Categorias</a></h5>
+                    </div> 
+                  </div> -->
+            
+            <!-- <div class="action-item col-md m-3 d-flex justify-content-center align-items-center"><a href="/admin/user">Users</a></div>
+            <div class="action-item col-md m-3 d-flex justify-content-center align-items-center"><a href="/admin/orders">Orders</a></div> -->
+        </div>
+    </div>
+</main>
+<%- include("../partials/footer") %>

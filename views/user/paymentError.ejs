@@ -1,0 +1,22 @@
+<%- include("../partials/header") %> 
+<title>ERROR</title>
+</head>
+<body>
+<main>
+<%- include("../partials/navbar") %> 
+<div class="errorpage d-flex flex-column justify-content-center align-items-center text-center" style="height:70vh">
+<img src="/images/Cross.png" alt="" width="100px" height="100px" class="my-2">
+<h5>Error con el Pago !</h5>
+<h5>Codigo de Error: <%=error.code%></h5>
+<h5>Descripción de Error : <%=error.description%></h5>
+<h5>Razón de Error: <%=error.reason%></h5>
+<!-- <h6 class="my-3">Usted será redirigido a la página del carrito en pocos segundos ...</h6> -->
+</h6>
+<a href="/user/cart">Haga clic aquí para redirigir</a>
+</div>
+</main>
+<script>
+    setTimeout(()=>{window.location.href="/user/cart"},6000);
+</script>
+
+<%- include("../partials/footer") %>

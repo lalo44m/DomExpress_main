@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DomXpress</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar-custom {
+            background-color: #003366; /* Color más oscuro y profesional */
+            padding: 0.5rem 1rem; /* Reducir el padding para una navbar más delgada */
+        }
+        .navbar-nav .nav-link {
+            color: #ffffff !important; /* Color blanco para los enlaces */
+            font-weight: 500; /* Hacer el texto más grueso */
+            padding: 0.5rem 1rem; /* Espaciado uniforme */
+        }
+        .navbar-nav .nav-link:hover {
+            color: #dc4c13 !important; /* Efecto hover */
+        }
+        .navbar-brand h5, .navbar-nav .nav-item h5 {
+            margin: 0;
+            color: #ffffff; /* Color blanco para el nombre de la marca */
+        }
+        .nav-item {
+            padding: 0 10px;
+        }
+        .form-control {
+            border-radius: 25px; /* Bordes redondeados */
+            padding: 0.375rem 1.5rem; /* Más padding para un mejor aspecto */
+            border: 1px solid #ced4da; /* Borde sutil */
+        }
+        .rounded-circle {
+            border: 2px solid #ffffff; /* Borde blanco alrededor del avatar */
+            height: 35px; /* Tamaño del avatar */
+            width: 35px; /* Tamaño del avatar */
+            margin-left: 1rem; /* Aumentar margen izquierdo */
+        }
+        .dropdown-menu {
+            right: 0;
+            left: auto;
+        }
+        .userName {
+            color: #ffffff; /* Color blanco para el nombre de usuario */
+        }
+    </style>
+
+<div class="pagebuilder-overlay"></div> <p style="text-align: center; margin-top: 0.5rem;">
+    Envíos <strong>Gratis</strong> a toda la República  
+    </p>
+</div> 
+</head> 
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <a class="navbar-brand mt-2 mt-lg-0 ms-3" href="/">
+            <h5>DomXpress</h5>
+        </a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <% if(loginUser) { %>
+                    <% if(loginUser.role == "Admin") { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/home"><h5>Administrador <i class="fas fa-user-shield"></i></h5></a>
+                        </li>
+                    <% } else { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/bookAll">Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/novedades">Novedades</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/categorias">Categorías</a>
+                        </li>
+                    <% } %>
+                <% } else { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bookAll">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/novedades">Novedades</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/categorias">Categorías</a>
+                    </li>
+                <% } %>
+            </ul>
+
+            <div class="d-flex align-items-center">
+                <a class="nav-link" href="https://wa.me/7296883843" target="_blank" title="Asistencia por WhatsApp">
+                    <i class="fab fa-whatsapp" style="font-size: 1.5rem; color: #25D366;"></i>
+                </a>
+                <% if(loginUser) { %>
+                    <div class="userName me-3 d-none d-sm-block">
+                        <h5>Hola <%= loginUser.username %></h5>
+                    </div>
+                <% } %>
+
+                <form class="d-flex input-group w-auto" action="/search" method="GET">
+                    <input type="search" class="form-control rounded" placeholder="Buscar en Sitio" aria-label="Search" aria-describedby="search-addon" id="search" name="query"/>
+                </form>
+
+                <% if(loginUser) { %>
+                    <a class="text-reset me-3" href="/user/cart" style="margin-left: 1rem;">
+                        <i class="fas fa-shopping-cart" style="font-size: 1.2rem; color: aliceblue;"></i>
+                        <% let cartLength = 0; if(loginUser) { cartLength = loginUser.cart.length } %>
+                        <span class="badge rounded-pill badge-notification bg-success"><%= cartLength %></span>
+                    </a>
+                <% } %>
+
+                <a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuLink"
+                   role="button" data-toggle="dropdown" aria-expanded="false">
+                    <% var photourl;
+                    try {
+                        photourl = loginUser.photo || `data:image/${loginUser.image.contentType};base64,${loginUser.image.data.toString('base64')}`
+                    } catch (e) {
+                        photourl = `https://toppng.com/uploads/preview/app-icon-set-login-icon-comments-avatar-icon-11553436380yill0nchdm.png`
+                    } %>
+                    <img src="<%= photourl %>" class="rounded-circle" height="35" width="35" alt="" loading="lazy"/>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                    <% if(loginUser) { %>
+                        <li>
+                            <div class="dropdown-item">
+                                <strong>Usuario: </strong><%= loginUser.username %> <br>
+                                <% if(loginUser.role == "Customer") { %>
+                                    <strong>Correo: </strong><%= loginUser.email %>
+                                <% } %>
+                            </div>
+                        </li>
+                        <% if(loginUser.role == "Admin") { %>
+                        <% } else { %>
+                            <li>
+                                <a class="dropdown-item" href="/user/orders">Tus Pedidos</a>
+                            </li>
+                        <% } %>
+                        <li>
+                            <a class="dropdown-item" href="/logout">Cerrar Sesión</a>
+                        </li>
+                    <% } else { %>
+                        <li>
+                            <a class="dropdown-item" href="/register">Registrarse</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/login">Iniciar Sesión</a>
+                        </li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<script>
+    $(function() {
+        $('#search').autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: '/autocomplete',
+                    dataType: 'json',
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 1,
+            select: function(event, ui) {
+                window.location.href = ui.item.value;
+                return false;
+            }
+        });
+
+        $('#search').keypress(function(event) {
+            if (event.which == 13) {
+                event.preventDefault();
+                var query = $(this).val();
+                if (query) {
+                    window.location.href = '/search?query=' + encodeURIComponent(query);
+                }
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

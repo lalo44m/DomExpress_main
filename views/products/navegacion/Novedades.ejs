@@ -1,0 +1,111 @@
+<%- include("../../partials/header") %>
+
+<title>Novedades</title>
+<!-- Asegúrate de incluir el CSS de Bootstrap -->
+
+</head>
+<body>
+<%- include("../../partials/navbar") %> 
+<%- include("../../partials/flash") %> 
+<%- include("../../partials/button") %> 
+<main>
+    <div class="home-body container mt-4">      
+        <div class="container mt-4">
+          <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Novedades</li>
+            </ol>
+          </nav>
+        </div>
+        <section class="product-holder my-3">
+          <% 
+          // Ordenar los productos por fecha en orden ascendente
+          data.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+
+          // Limitar la cantidad de productos mostrados 
+          const recentProducts = data.slice(0, 5).reverse();
+          %>
+
+          <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <% for (let i = 0; i < recentProducts.length; i += 3) { %>
+                <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+                  <div class="row">
+                    <% for (let j = i; j < i + 3; j++) { 
+                      const item = recentProducts[j];
+                      if (item) { %>
+                      <div class="col-lg-4 col-md-6 d-flex align-items-stretch"> 
+                        <div class="product-card card mb-4 w-100">
+                          <div class="bg-image hover-overlay ripple d-flex justify-content-center align-items-center position-relative" data-mdb-ripple-color="light" style="border-radius: 12px; height: 200px;">
+                            <% if(item.image && item.image.data) { %>
+                            <img
+                              src="data:image/<%=item.image.contentType%>;base64,<%=item.image.data.toString('base64')%>"
+                              class="img-fluid rounded-top"
+                              style="object-fit: cover; max-height: 100%; max-width: 100%;"
+                            />
+                          <% } else { %>
+                          <img
+                              src="<%=item.img%>"
+                              class="img-fluid rounded-top"
+                              alt="Item Image"
+                              style="object-fit: cover; max-height: 100%; max-width: 100%;"
+                            />
+                         <% } %>
+                            <a href="#!">
+                              <div class="mask" style="background-color: rgba(0, 0, 0, 0.15);"></div>
+                            </a>
+                            <div class="badge bg-primary text-white position-absolute top-0 start-0 m-2">Agregado recientemente</div>
+                          </div>
+                          <div class="card-body">
+                            <h5 class="card-title"><%= item.name %></h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Precio &#36;<%= item.price %></h6>
+                            <p class="card-text"><%= item.desc.slice(0,90) %>...</p>
+                            <a href="/products/<%= item._id %>" class="btn btn-primary btn-block">Ver más</a>
+                          </div>
+                        </div>
+                      </div>
+                    <% } else { %>
+                      <div class="col-lg-4 col-md-6 d-flex align-items-stretch"> 
+                        <div class="product-card card mb-4 w-100" style="visibility: hidden;">
+                          <div class="card-body">
+                            <h5 class="card-title">Placeholder</h5>
+                          </div>
+                        </div>
+                      </div>
+                    <% } %>
+                    <% } %>
+                  </div>
+                </div>
+              <% } %>
+            </div>
+            <!--carrusel -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </section>
+    </div>
+</main>
+<%- include("../../partials/footer") %>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+<style>
+    .product-card {
+        margin-bottom: auto; 
+        min-height: auto; 
+    }
+    
+    .badge {
+        font-size: 0.75rem; /* Tamaño de la fuente de la etiqueta */
+        padding: 0.5em 1em; /* Espaciado dentro de la etiqueta */
+    }
+    
+</style>

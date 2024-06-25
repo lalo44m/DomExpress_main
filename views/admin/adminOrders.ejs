@@ -1,0 +1,94 @@
+<%- include("../partials/header") %> 
+<title>Pedidos</title>
+</head>
+<body>
+<%- include("../partials/navbar") %> 
+<div class="container-fluid my-2">
+    <%- include("../partials/flash") %>
+  </div> 
+<main>
+<div class="container">
+    <h2 class="order-heading my-3 text-center">Administrador de los Pedidos</h2>
+    <hr>
+
+
+    <% if(orders.length<1){ %>
+        <h2 class="text-center">No hay Pedidos ! </h2>
+    <%}
+    else{%> 
+    <section class="order-list">
+        <% for(let item of orders.reverse()){%>
+            <div class="card  my-4">
+                <div class="card-header text-center row">
+                    <div class="col-md"><h5>Id del Pedido : <%=item.orderid%></h5></div>
+                    <%let usrname= "deleted_user" 
+                     if(item.user!=null){usrname=item.user.username}%>
+                   <div class="col-md"><h5>Pedido por "<%=usrname %>" </h5></div>   
+                    <div class="col-md"> <h5>Fecha de Compra : <%=String(item.fechaCompra).slice(0,16)%></h5></div>                        
+                    
+                 </div>
+                
+                <div class="card-body row">
+                    <ul class="list-group">
+                        <% let count=0;
+                        for(let itemList of item.orderList) { count++  %>
+                           
+                            <li class="list-group-item">
+                                <h6>Producto no : <%=count%></h6>
+                                <%  if(itemList.item==null){%>
+                                    <h5 class="text-center">Este producto ya no existe lo sentimos no podemos mostrar su información !</h5>
+                                <%}
+                                else{%>
+                                <div class="itemList row">
+
+                                    <div class="itemList-img col-md-2" >
+                                        <%if(itemList.item.image.data){%>
+                                            <img src="data:image/<%=itemList.item.image.contentType%>;base64,<%=itemList.item.image.data.toString('base64')%>" class="img-fluid" width="100%"/>
+                                        <%}
+                                        else{%>
+                                            <img src="<%=itemList.item.img%>" alt="Item Image" class="itemImg" width="100%" >
+                                        <%}%>
+                                    </div>
+                                    <div class="itemList-name col-5 d-flex align-items-center p-3">
+                                        <h5><%=itemList.item.name%></h5>
+                                    </div>
+                                    <div class="itemList-price col d-flex align-items-center p-3">
+                                        <h5> Precio Final:  &#36; <%=item.finalPrice%></h5>
+                                    </div>
+                                    <div class="itemList-quantity col d-flex align-items-center p-3">
+                                        <h5> Cantidad : <%=itemList.quantity%></h5>
+                                    </div>
+                                </div>
+                            <%}%>
+                            </li>
+                         <%}%> 
+                    </ul>
+                
+                </div>
+                <div class="card-footer text-center row">
+                    <div class="col-md"><h5>Instalcion agendada para:   <%=item.citaInstalcion%></h5></div>
+                    
+                    <% if (item.atendida == false) { %>
+                        <div class="col-md">
+                            <a href="/update/estado/<%= item.id %>" type="button" class="btn btn-success">
+                                Atender
+                            </a>
+                        </div>
+                        <% } else { %>
+                        <!-- <div class="col-md"><h5>:   <%=item.citaInstalcion%></h5></div> -->
+                        <div class="col-md">
+                          <a type="button" class="btn btn-danger" disabled>
+                            Atendida
+                          </a>
+                        </div>
+                      <% } %>
+                      
+                </div>
+            </div>
+            <hr>
+        <%} %> 
+    </section>
+<%}%>
+</div>
+</main>
+<%- include("../partials/footer") %>
