@@ -16,6 +16,7 @@
     </div>
     <%if(data.length<1){%>
         <h2 class="text-center">Hey <%=loginUser.username%> No hay articulos en el Carrito</h2>
+        <button class="btn btn-secondary" onclick="window.history.back()">Volver</button>
     <%}
     else{%>
     <div class="cartinfo row">
