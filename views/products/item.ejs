@@ -77,7 +77,7 @@
               <div class="allbuttons">
                 <div class="addtocart mb-2">
                   <%
-                    let addtoCart=/user/cart/${data._id}
+                    let addtoCart=`/user/cart/${data._id}`
                      %>
                   <form action="<%=addtoCart%>" method="post" class="d-flex justify-content-evenly">
               <button type="submit" class="btn btn-success">Agregar al carrito</button>
